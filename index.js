@@ -18,34 +18,42 @@ async function start() {
   let secretNumber = await ask ("What is the secret number?")
   //printing out secret number to console
   console.log('You entered: ' + secretNumber);
+ 
   //allowing computer to guess the secret number between 1 and 100
   let compGuess = Math.floor(Math.random() * 100 + 1);
   //printing out computers guessed numer
-  console.log( "Guess a number!" + compGuess);
+  //console.log( "Guess a number!" + compGuess);
   
   //creating a while loop that keeps track of the number of guesses that the computer makes, computer has up to 7 guesses 
   let guess = 0;
   while(guess < 7 && compGuess !== secretNumber) {
+    let max = 100
+    let min = 1
     guess ++;
   
     //if the computers guess is less than secret number then the computer will have to guess higher
     if (compGuess < secretNumber) {
+    min = compGuess + 1
+    console.log("MIN:", min)
+    compGuess = Math.floor(Math.random() * max + min);  
     console.log(`${compGuess}? No`);
     await ask(" is the secret number higher or lower?");
     //the human will enter higher
   
     //if the computers guess is greater than secret number then the computer will have to guess lower
   } else if(compGuess > secretNumber) {
+    max = compGuess - 1
+    console.log("MAX:", max)
+    compGuess = Math.floor(Math.random() * max + min);  
     console.log(`${compGuess}? No`);
     await ask(" is the secret number higher or lower?");
     // the human will enter lower
   
     //computer guessed the secret number and while loop ends with a happy ending
   } else {
-
+    console.log("Yes! supercalifragilisticexpialidocious, you guessed the secret number!!!");
+    process.exit();
   }
   }
-  console.log("Yes! supercalifragilisticexpialidocious, you guessed my secret number!!!");
-  process.exit();
 }
 
