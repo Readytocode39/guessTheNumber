@@ -31,14 +31,14 @@ async function start() {
   let compGuess = Math.floor(Math.random() * max + min);
   console.log(compGuess);
 
-  //storing compGuess in response variable that will result in a y or n
-  let response = await ask(`Is your number ${compGuess}? (y/n)`);
+  //creating a response variable whos value is y or n
+  let response = await ask(`Is your secret number ${compGuess}? (y/n)`);
 
   //creating an if statement that will enter a while loop as long as response is equal to "n" and secretNumber is not equal to compGuess
   if (response === "n" && secretNumber !== compGuess) {
 
     //creating a variable that tracks the number of guesses the computer makes
-    let guess = 1;
+    let guess = 0;
 
     while (compGuess !== secretNumber) {
       guess++;
@@ -47,7 +47,7 @@ async function start() {
       if (response === "y") {
         break;
 
-        //if response is equal to "n" then computer will be ask is the secret number higher or lower
+        //if response is equal to "n" then human will be asked is the secret number higher or lower
       } else if (response === "n") {
 
         //new highLow variable created, which will store humans value of higher or lower
@@ -59,20 +59,20 @@ async function start() {
           console.log("MAX:", max);
           //using binary with with random numbers to have the computer guess secret number in less than 7 tries 
           compGuess = Math.floor((max + min) / 2);
-          response = await ask(`Is you number${compGuess}? (y/n)`);
-        
+          response = await ask(`Is your secret number${compGuess}? (y/n)`);
+
           //if highLow is equal to "higher" then computer will have to guess a higher number than previously guessed
         } else if (highLow === "higher") {
           min = compGuess + 1;
           console.log("MAX:", max);
           compGuess = Math.floor((max + min) / 2);
-          response = await ask(`Is you number${compGuess}? (y/n)`);
+          response = await ask(`Is your secret number${compGuess}? (y/n)`);
         }
       }
 
     }
+    console.log(`Yes! supercalifragilisticexpialidocious, you guessed the secret number!!! It only took you: ${guess} guesses`);
   }
-  console.log(`Yes! supercalifragilisticexpialidocious, you guessed the secret number!!! It only took me: ${guess}'s`);
 
   process.exit();
 }
