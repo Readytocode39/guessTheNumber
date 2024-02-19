@@ -40,7 +40,7 @@ async function start() {
 
         //if response is equal to "n" then computer will be asked is the secret number higher or lower
       } else if (response === "n") {
-
+        console.log("sorry, please guess again.");
         //new highLow variable created, which will store value of higher or lower
         let highLow = await ask("is the secret number higher or lower?");
 
