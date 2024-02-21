@@ -13,9 +13,14 @@ async function start() {
 
   //ask computer to play guess the secret number
   console.log("Lets play, guess the secret number... You (the computer), will guess what number you think I (the human) might have designated as a secert number.");
+  console.log("A max and min range between 1 and 100 inclusive is needed.")
+  //setting range of compGuess
+  let stringMax = await ask("Please enter a max:");
+  let stringMin = await ask("please enter a min:");
+  let max = Number(stringMax);
+  let min = Number(stringMin);
+  console.log(max)
 
-  //the computer is asking the human, is the secret number between 1 and 100 inclusive? and then waiting on a Yes or No from the human
-  await ask("Is the secret number a random number between 1 and 100 (inclusive)?(Yes or No)\n");
 
   //human enters secert number, which will be stored as a variable (in secretNumber)
   let secretNumber = await ask("What is the secret number?");
@@ -23,12 +28,19 @@ async function start() {
   //printing out secret number to console
   console.log('You entered: ' + secretNumber);
 
-  //setting range of compGuess
-  let max = 100;
-  let min = 1;
+  while (secretNumber > max || secretNumber <min) {
+   
+    if (secretNumber> max) {
+    secretNumber = await ask ("please pick a lower secret number: ")
+  } else if (secretNumber < min) {
+    
+    secretNumber = await ask ("please pick a hihger secret number:")
+
+  }
+}
 
   //computer is attempting to guess secret Number, guess is then printed to console
-  let compGuess = Math.floor(Math.random() * max + min);
+  let compGuess = Math.floor((max + min) / 2);
   console.log(compGuess);
 
   //creating a response variable whos value is y or n
@@ -72,8 +84,8 @@ async function start() {
 
     }
     console.log(`Yes! supercalifragilisticexpialidocious, you guessed the secret number!!! It only took you: ${guess} guesses`);
+  
   }
-
   process.exit();
 }
 
