@@ -12,7 +12,7 @@ start();
 async function start() {
 
   //ask computer to play guess the secret number
-  console.log("Lets play, guess the secret number... You (the computer), will guess what number you think I (the human) might have designated as a secert number.");
+  console.log("Lets play, guess the secret number... You the human will pick a secret number and I the computer will guess it.")
   console.log("A max and min range between 1 and 100 inclusive is needed.")
   //setting range of compGuess
   let stringMax = await ask("Please enter a max:");
@@ -41,26 +41,26 @@ async function start() {
 
   //computer is attempting to guess secret Number, guess is then printed to console
   let compGuess = Math.floor((max + min) / 2);
-  console.log(compGuess);
-
+  console.log(typeof compGuess);
+  console.log(typeof secretNumber)
   //creating a response variable whos value is y or n
   let response = await ask(`Is your secret number ${compGuess}? (y/n)`);
 
   //creating an if statement that will enter a while loop as long as response is equal to "n" and secretNumber is not equal to compGuess
-  if (response === "n" && secretNumber !== compGuess) {
+  if (response === "n" && secretNumber != compGuess) {
 
     //creating a variable that tracks the number of guesses the computer makes
     let guess = 0;
 
-    while (compGuess !== secretNumber) {
+    while (response !== "exit") {  //&& compGuess != secretNumber
       guess++;
 
       //if reponse is equal to "y" and secret number is equal to compguess, "while loop" will break and computer will be congratulated on guessing the secret number
-      if (response === "y" && secretNumber === compGuess) {
+      if (response === "y" && secretNumber == compGuess) {
         break;
 
         //if response is equal to "n" then computer will be asked is the secret number higher or lower
-      } else if (response === "n" && secretNumber !== compGuess) {
+      } else if (response === "n" && secretNumber != compGuess) {
 
         //new highLow variable created, which will store humans value of higher or lower
         let highLow = await ask("is the secret number higher or lower?");
@@ -73,21 +73,22 @@ async function start() {
           compGuess = Math.floor((max + min) / 2);
           response = await ask(`Is your secret number${compGuess}? (y/n)`);
 
-          if (response === "n" && secretNumber === compGuess || response === "y" && secretNumber !== compGuess) {
-            console.log(`Naughty you, liars never prosper!`)
-          }
+          // if (response === "n" && secretNumber === compGuess || response === "y" && secretNumber !== compGuess) {
+          //   console.log(`Naughty you, liars never prosper!`)
+          // }
 
           //if highLow is equal to "higher" then computer will have to guess a higher number than previously guessed
         } else if (highLow === "higher" && secretNumber > compGuess) {
           min = compGuess + 1;
-          console.log("MAX:", max);
+          console.log(compGuess);
           compGuess = Math.floor((max + min) / 2);
           response = await ask(`Is your secret number${compGuess}? (y/n)`);
 
-          if (response === "n" && secretNumber === compGuess && compGuess || response === "y" && secretNumber !== compGuess) {
-            console.log(`Naughty you, liars never prosper!`)
-          }
+
         }
+      }
+      else if (response === "n" && secretNumber == compGuess) {
+        console.log(`Naughty you, liars never prosper!`)
       }
 
     }
@@ -96,7 +97,9 @@ async function start() {
   }
   process.exit();
 }
-
+//  if (response === "n" && secretNumber === compGuess && compGuess || response === "y" && secretNumber !== compGuess) {
+//   console.log(`Naughty you, liars never prosper!`)
+// }
 
 
 
